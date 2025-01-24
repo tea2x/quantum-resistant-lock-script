@@ -4,6 +4,7 @@ The quantum resistant lockscript project only add rust interface to the official
 #### 0. clone
 ```shell
 git clone --recurse-submodules https://github.com/tea2x/quantum-resistant-lock-script.git
+cd quantum-resistant-lock-script/
 git checkout test-interoperability
 ```
 

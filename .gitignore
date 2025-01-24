@@ -59,6 +59,5 @@ Cargo.lock
 
 
 # test js and c sphincs interop
-test_js_c_interop/message.txt
 test_js_c_interop/signature.txt
 test_js_c_interop/key.json
