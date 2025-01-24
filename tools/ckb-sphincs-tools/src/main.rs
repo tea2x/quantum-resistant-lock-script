@@ -50,6 +50,14 @@ fn get_args() -> Command {
                 .arg(arg!(--fee <FEE>).num_args(0..=usize::MAX))
                 .arg_required_else_help(true),
         )
+        .subcommand(
+            Command::new("sign")
+            .about("sign a message")
+            .arg(arg!(--key_file <KEY_FILE>))
+            .arg(arg!(--message_file <MESSAGE>))
+            .arg(arg!(--signature_path <SIGPATH>))
+            .arg_required_else_help(true),
+        )
 }
 
 fn main() {
@@ -57,21 +65,26 @@ fn main() {
     let matches = args.get_matches();
 
     match matches.subcommand() {
+        Some(("sign", sub_matches)) => {
+            let key_file = sub_matches.get_one::<String>("key_file").expect("required");
+            // let message = sub_matches.get_one::<H256>("MESSAGE").expect("required");
+            let message_file = sub_matches.get_one::<String>("message_file").expect("required");
+            
+            let signature_file = sub_matches.get_one::<String>("signature_path").map(|s| PathBuf::from(s));
+            sub_sign::sub_sign(sub_gen_key::parse_key_file(PathBuf::from(key_file)), PathBuf::from(message_file), signature_file);
+                
+        }
         Some(("gen-key", sub_matches)) => {
             let key_file = sub_matches.get_one::<String>("KEY_FILE").expect("required");
             sub_gen_key::subcmd_gen_key(PathBuf::from(key_file));
         }
         Some(("signature", sub_matches)) => {
             let key_file = sub_matches.get_one::<String>("key_file").expect("required");
-            let message =
-                H256::from_trimmed_str(
-                    sub_matches.get_one::<String>("message").expect("required")
-                        .trim_start_matches("0x")
-                        .trim_start_matches('0')
-                ).unwrap();
+            let message_file = sub_matches.get_one::<String>("message_file").expect("required");
             sub_sign::sub_sign(
                 sub_gen_key::parse_key_file(PathBuf::from(key_file)),
-                message,
+                PathBuf::from(message_file),
+                None
             );
         }
         Some(("cc_to_sphincsplus", sub_matches)) => {

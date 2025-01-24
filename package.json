@@ -1,0 +1,28 @@
+{
+  "name": "quantum-resistant-lock-script",
+  "version": "1.0.0",
+  "description": "Quantum resistant lock script on CKB, using [SPHINCS+](https://github.com/sphincs/sphincsplus).",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tea2x/quantum-resistant-lock-script.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ckb-lumos/base": "^0.23.0",
+    "@noble/post-quantum": "^0.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/tea2x/quantum-resistant-lock-script/issues"
+  },
+  "homepage": "https://github.com/tea2x/quantum-resistant-lock-script#readme",
+  "type": "module"
+}
