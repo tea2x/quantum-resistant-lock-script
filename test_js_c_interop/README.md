@@ -1,3 +1,6 @@
+The quantum resistant lockscript project only add rust interface to the official impelemtation in C from Sphincs+ team https://github.com/sphincs/sphincsplus.
+
+
 #### 0. clone
 ```shell
 git clone --recurse-submodules https://github.com/tea2x/quantum-resistant-lock-script.git
