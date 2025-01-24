@@ -1,3 +1,9 @@
+#### 0. clone
+```shell
+git clone --recurse-submodules https://github.com/tea2x/quantum-resistant-lock-script.git
+git checkout test-interoperability
+```
+
 #### 1. compile sphincs and tools in the main DIR
 ```shell
 make all-via-docker
