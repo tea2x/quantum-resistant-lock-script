@@ -70,5 +70,6 @@ const originalMessage = await readHexFileAsBytes("./message.txt");
 console.log(">>>the original message sphics+ signed: ", originalMessage.toString());
 console.log(">>> message from sphincs-C signature: ", message.toString());
 
+// verify
 const isValid = slh_dsa_shake_128f.verify(keys.publicKey, message, signature);
 console.log(">>>isValid: ", isValid);

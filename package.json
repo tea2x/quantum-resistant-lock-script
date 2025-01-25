@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@ckb-lumos/base": "^0.23.0",
-    "@noble/post-quantum": "^0.3.0"
+    "@noble/post-quantum": "^0.3.1"
   },
   "bugs": {
     "url": "https://github.com/tea2x/quantum-resistant-lock-script/issues"

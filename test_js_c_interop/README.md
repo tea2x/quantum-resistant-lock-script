@@ -26,6 +26,6 @@ cargo run sign --message_file ../../test_js_c_interop/message.txt  --key_file ..
 #### 4. go to /test_js_c_interop and use noble/sphincs to verify the signature
 
 ```shell
-nmp install
+npm install
 node index.js
 ```
