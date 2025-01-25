@@ -21,10 +21,3 @@ cargo run -- sign --message_file ../../test_js_c_interop/message.txt --key_file 
 cd ../../test_js_c_interop || exit
 npm install
 node index.js
-
-# Check verification result (assuming index.js outputs 'true' or 'false')
-if [ $? -eq 0 ]; then
-    echo "Test Vector Verified Successfully"
-else
-    echo "Verification Failed"
-fi
