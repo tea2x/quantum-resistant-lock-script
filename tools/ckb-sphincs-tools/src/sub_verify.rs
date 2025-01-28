@@ -19,8 +19,8 @@ pub fn sub_verify(key: SphincsPlus, message_file: PathBuf, signature_file: PathB
     let verif = key.verify(&message, &signature);
 
     match verif {
-      Ok(_) => println!("Signature verification successful"),
-      Err(error_code) => println!("Signature verification failed with error code: {}", error_code),
+      Ok(_) => println!(">>> Result: Successful"),
+      Err(error_code) => println!(">>> Result: false: {}", error_code),
   }
 }
 

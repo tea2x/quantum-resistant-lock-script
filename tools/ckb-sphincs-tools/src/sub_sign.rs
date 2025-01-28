@@ -20,7 +20,7 @@ pub fn sub_sign(key: SphincsPlus, message_file: PathBuf, signature_file: Option<
     // println!("{:}", format!("0x{}", encode(&sign)));
 
     let data = format!("0x{}", encode(&sign));
-    println!("Signature: {:}", data);
+    // println!("Signature: {:}", data);
 
     if let Some(file) = signature_file {
         std::fs::write(file, data).expect("write signature failed");

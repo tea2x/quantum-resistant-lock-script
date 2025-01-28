@@ -55,16 +55,16 @@ fn get_args() -> Command {
             Command::new("sign")
                 .about("sign a message")
                 .arg(arg!(--key_file <KEY_FILE>))
-                .arg(arg!(--message_path <MESSAGE>))
-                .arg(arg!(--signature_path <SIGPATH>))
+                .arg(arg!(--message_file <MESSAGE>))
+                .arg(arg!(--signature_file <SIGPATH>))
                 .arg_required_else_help(true),
         )
         .subcommand(
             Command::new("verify")
                 .about("verify a message")
                 .arg(arg!(--key_file <KEY_FILE>))
-                .arg(arg!(--message_path <MESSAGE>))
-                .arg(arg!(--signature_path <SIGPATH>))
+                .arg(arg!(--message_file <MESSAGE>))
+                .arg(arg!(--signature_file <SIGPATH>))
                 .arg_required_else_help(true),
         )
 }
@@ -78,11 +78,11 @@ fn main() {
             let key_file = sub_matches.get_one::<String>("key_file").expect("required");
             // let message = sub_matches.get_one::<H256>("MESSAGE").expect("required");
             let message_file = sub_matches
-                .get_one::<String>("message_path")
+                .get_one::<String>("message_file")
                 .expect("required");
 
             let signature_file = sub_matches
-                .get_one::<String>("signature_path")
+                .get_one::<String>("signature_file")
                 .expect("required");
             sub_verify::sub_verify(
                 sub_gen_key::parse_key_file(PathBuf::from(key_file)),
@@ -94,11 +94,11 @@ fn main() {
             let key_file = sub_matches.get_one::<String>("key_file").expect("required");
             // let message = sub_matches.get_one::<H256>("MESSAGE").expect("required");
             let message_file = sub_matches
-                .get_one::<String>("message_path")
+                .get_one::<String>("message_file")
                 .expect("required");
 
             let signature_file = sub_matches
-                .get_one::<String>("signature_path")
+                .get_one::<String>("signature_file")
                 .map(|s| PathBuf::from(s));
             sub_sign::sub_sign(
                 sub_gen_key::parse_key_file(PathBuf::from(key_file)),
