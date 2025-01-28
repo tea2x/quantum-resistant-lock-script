@@ -103,12 +103,13 @@ impl SphincsPlus {
         s
     }
 
-    pub fn verify(&self, msg: &[u8], sign: &[u8]) -> Result<(), ()> {
+    pub fn verify(&self, msg: &[u8], sign: &[u8]) -> Result<(), i32> {
         let mut sm = Vec::new();
         sm.resize(32, 0xFF);
 
+        let result:i32;
         unsafe {
-            sphincs_plus_verify(
+            result = sphincs_plus_verify(
                 sign.as_ptr(),
                 sign.len() as u32,
                 msg.as_ptr(),
@@ -118,6 +119,10 @@ impl SphincsPlus {
             );
         }
 
-        Ok(())
+        if result == 0 {
+            Ok(())
+        } else {
+            Err(result)
+        }
     }
 }

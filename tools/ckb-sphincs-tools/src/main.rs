@@ -1,6 +1,7 @@
 mod sub_conversion;
 mod sub_gen_key;
 mod sub_sign;
+mod sub_verify;
 mod utils;
 
 use ckb_types::H256;
@@ -52,11 +53,19 @@ fn get_args() -> Command {
         )
         .subcommand(
             Command::new("sign")
-            .about("sign a message")
-            .arg(arg!(--key_file <KEY_FILE>))
-            .arg(arg!(--message_file <MESSAGE>))
-            .arg(arg!(--signature_path <SIGPATH>))
-            .arg_required_else_help(true),
+                .about("sign a message")
+                .arg(arg!(--key_file <KEY_FILE>))
+                .arg(arg!(--message_path <MESSAGE>))
+                .arg(arg!(--signature_path <SIGPATH>))
+                .arg_required_else_help(true),
+        )
+        .subcommand(
+            Command::new("verify")
+                .about("verify a message")
+                .arg(arg!(--key_file <KEY_FILE>))
+                .arg(arg!(--message_path <MESSAGE>))
+                .arg(arg!(--signature_path <SIGPATH>))
+                .arg_required_else_help(true),
         )
 }
 
@@ -65,14 +74,37 @@ fn main() {
     let matches = args.get_matches();
 
     match matches.subcommand() {
+        Some(("verify", sub_matches)) => {
+            let key_file = sub_matches.get_one::<String>("key_file").expect("required");
+            // let message = sub_matches.get_one::<H256>("MESSAGE").expect("required");
+            let message_file = sub_matches
+                .get_one::<String>("message_path")
+                .expect("required");
+
+            let signature_file = sub_matches
+                .get_one::<String>("signature_path")
+                .expect("required");
+            sub_verify::sub_verify(
+                sub_gen_key::parse_key_file(PathBuf::from(key_file)),
+                PathBuf::from(message_file),
+                PathBuf::from(signature_file),
+            );
+        }
         Some(("sign", sub_matches)) => {
             let key_file = sub_matches.get_one::<String>("key_file").expect("required");
             // let message = sub_matches.get_one::<H256>("MESSAGE").expect("required");
-            let message_file = sub_matches.get_one::<String>("message_file").expect("required");
-            
-            let signature_file = sub_matches.get_one::<String>("signature_path").map(|s| PathBuf::from(s));
-            sub_sign::sub_sign(sub_gen_key::parse_key_file(PathBuf::from(key_file)), PathBuf::from(message_file), signature_file);
-                
+            let message_file = sub_matches
+                .get_one::<String>("message_path")
+                .expect("required");
+
+            let signature_file = sub_matches
+                .get_one::<String>("signature_path")
+                .map(|s| PathBuf::from(s));
+            sub_sign::sub_sign(
+                sub_gen_key::parse_key_file(PathBuf::from(key_file)),
+                PathBuf::from(message_file),
+                signature_file,
+            );
         }
         Some(("gen-key", sub_matches)) => {
             let key_file = sub_matches.get_one::<String>("KEY_FILE").expect("required");
@@ -80,11 +112,13 @@ fn main() {
         }
         Some(("signature", sub_matches)) => {
             let key_file = sub_matches.get_one::<String>("key_file").expect("required");
-            let message_file = sub_matches.get_one::<String>("message_file").expect("required");
+            let message_file = sub_matches
+                .get_one::<String>("message_file")
+                .expect("required");
             sub_sign::sub_sign(
                 sub_gen_key::parse_key_file(PathBuf::from(key_file)),
                 PathBuf::from(message_file),
-                None
+                None,
             );
         }
         Some(("cc_to_sphincsplus", sub_matches)) => {
@@ -97,17 +131,11 @@ fn main() {
             sub_conversion::cc_to_sphincsplus(
                 sub_gen_key::parse_key_file(PathBuf::from(key_file)),
                 &ckb_rpc,
-                H256::from_trimmed_str(
-                    tx_hash
-                        .trim_start_matches("0x")
-                        .trim_start_matches('0')
-                ).unwrap(),
+                H256::from_trimmed_str(tx_hash.trim_start_matches("0x").trim_start_matches('0'))
+                    .unwrap(),
                 tx_index.parse::<u32>().unwrap(),
-                H256::from_trimmed_str(
-                    prikey
-                        .trim_start_matches("0x")
-                        .trim_start_matches('0')
-                ).unwrap(),
+                H256::from_trimmed_str(prikey.trim_start_matches("0x").trim_start_matches('0'))
+                    .unwrap(),
             );
         }
         Some(("cc_to_secp", sub_matches)) => {
@@ -131,18 +159,12 @@ fn main() {
             sub_conversion::cc_to_def_lock_script(
                 sub_gen_key::parse_key_file(PathBuf::from(key_file)),
                 &ckb_rpc,
-                H256::from_trimmed_str(
-                    tx_hash
-                    .trim_start_matches("0x")
-                    .trim_start_matches('0')
-                ).unwrap(),
+                H256::from_trimmed_str(tx_hash.trim_start_matches("0x").trim_start_matches('0'))
+                    .unwrap(),
                 tx_index.parse::<u32>().unwrap(),
                 &str_to_bytes(&lock_arg),
-                H256::from_trimmed_str(
-                    sp_tx_hash
-                        .trim_start_matches("0x")
-                        .trim_start_matches('0')
-                ).unwrap(),
+                H256::from_trimmed_str(sp_tx_hash.trim_start_matches("0x").trim_start_matches('0'))
+                    .unwrap(),
                 sp_tx_index.parse::<u32>().unwrap(),
                 fee.clone(),
             );
