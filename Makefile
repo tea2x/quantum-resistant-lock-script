@@ -50,7 +50,9 @@ build:
 			cargo build -p $$(basename $$crate) $(MODE_ARGS) $(CARGO_ARGS); \
 		done; \
 		for contract in $(sort $(wildcard contracts/*)); do \
-			$(MAKE) -e -C $$contract build; \
+			if [ -d "$$contract" ]; then \
+				$(MAKE) -e -C $$contract build; \
+			fi; \
 		done; \
 		for crate in $(wildcard tools/*); do \
 			cargo build -p $$(basename $$crate | tr '-' '_') $(MODE_ARGS) $(CARGO_ARGS); \

@@ -1,7 +1,7 @@
 
 ## SPHINCS+ Lock Implementation Strategy
 
-We evaluated three different technical approaches for implementing the SPHINCS+ lock with the goal of selecting the most secure and stable version for long-term deployment.
+We have evaluated three different technical approaches for implementing the SPHINCS+ lock with the goal of selecting the most secure and stable version for long-term deployment.
 
 ### The Three Implementation Versions
 
@@ -42,8 +42,8 @@ SPHINCS+ is intended primarily as a **long-term security solution** for users wh
 * We prioritize **foundational stability** over added features or a rapidly changing ecosystem.
 * The **Pure C** implementation, leveraging mature, stable toolchains and the proven `sphincsplus` C library, offers the most reliable foundation for a contract intended to remain unchanged for decades.
 
-### Conclusion
+### Usage Guidance
 
-We would want to deploy the **Pure C Implementation Contract** due to its combination of superior cryptographic assurance (NIST reference implementation) and its stability for long-term, quantum-resistant asset protection. This approach ensures the most trustworthy and enduring lock on the CKB chain.
+We will deploy the **Pure C Implementation Contract** due to its combination of superior cryptographic assurance (NIST reference implementation) and its stability for long-term, quantum-resistant asset protection. This approach ensures the most trustworthy and enduring lock on the CKB chain.
 
-While the Pure Rust and Hybrid versions offer interesting trade-offs, user may also consider them for experimental or short-term use cases where rapid iteration or Rust-native tooling is prioritized over the highest assurance and long-term stability.
+While the Pure Rust and Hybrid versions offer interesting trade-offs, you should generally consider them for experimental, short-term scenarios or situations where the benefits of native Rust tooling outweigh the need for maximum guarantees and long-term stability.
