@@ -1,5 +1,7 @@
 # quantum-resistant-lock-script
-Quantum resistant lock script on CKB, based on [NIST FIPS 205](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf) standard. 2 implementations exist:
+Quantum resistant lock script on CKB, based on [NIST FIPS 205](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf) standard. 
+
+There are 3 implementations:
 
 * [A C lock script](./contracts/c-sphincs-all-in-one-lock/) using [SPHINCS+](https://github.com/sphincs/sphincsplus)
 * [A Rust lock script](./contracts/sphincs-all-in-one-lock/) using [fips205](https://github.com/integritychain/fips205)
