@@ -1,8 +1,11 @@
 # quantum-resistant-lock-script
 Quantum resistant lock script on CKB, based on [NIST FIPS 205](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf) standard. 2 implementations exist:
 
-* A C lock script using [SPHINCS+](https://github.com/sphincs/sphincsplus)
-* A Rust lock script using [fips205](https://github.com/integritychain/fips205)
+* [A C lock script](./contracts/c-sphincs-all-in-one-lock/) using [SPHINCS+](https://github.com/sphincs/sphincsplus)
+* [A Rust lock script](./contracts/sphincs-all-in-one-lock/) using [fips205](https://github.com/integritychain/fips205)
+* [A hybrid lock script](./contracts/hybrid-sphincs-all-in-one-lock/) with the implementation of SPHINCS+ utilizing the sphincsplus C library and Rust glue code.
+
+You can find more details about the implementation strategy in [contracts/README.md](./contracts/README.md).
 
 ## Build
 
@@ -43,7 +46,7 @@ In general, the `s` variants take longer to generate a signature, but takes less
 
 **NOTE**: the following tool shall be considered deprecated, and only kept here for historic reasons.
 
-This tool is to **convert a default Lock(SECP256K1/blake160) to quantum resistant lock script.**. 
+This tool is to **convert a default Lock(SECP256K1/blake160) to quantum resistant lock script.**.
 
 Follow steps below:
 
